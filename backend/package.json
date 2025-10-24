@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+<<<<<<< HEAD
+    "axios": "^1.12.2",
+=======
+>>>>>>> 5a3be9c767556ea735bbf1dbe640e75cc18e9778
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.2",
+<<<<<<< HEAD
+    "node-cron": "^4.2.1",
+=======
+>>>>>>> 5a3be9c767556ea735bbf1dbe640e75cc18e9778
+    "nodemon": "^3.1.10",
+    "redis": "^5.9.0"
+  }
+}
