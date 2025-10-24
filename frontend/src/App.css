@@ -1,0 +1,205 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Reset and Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f7fe;
+  color: #333;
+  display: flex;
+}
+
+#root {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Main App Layout */
+.app-container {
+  display: flex;
+  width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 80px;
+  background-color: #4a4de6; /* Blue from template */
+  color: #fff;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0 20px 20px 0;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-icon {
+  font-size: 24px;
+  color: #c4c6ff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.nav-icon:hover,
+.nav-icon.active {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-footer .nav-icon {
+  font-size: 20px;
+}
+
+/* Dashboard Content */
+.dashboard-container {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.dashboard-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2c2f48;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 8px 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  background: transparent;
+  margin-right: 8px;
+}
+
+.search-bar .search-icon {
+  font-size: 18px;
+  color: #aaa;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(150px, auto);
+  gap: 20px;
+}
+
+/* Card Styles */
+.card {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+  overflow: hidden; /* Ensures charts stay within bounds */
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* KPI Card Styles */
+.kpi-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.kpi-value {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #2c2f48;
+  line-height: 1.2;
+}
+
+.kpi-label {
+  font-size: 14px;
+  color: #888;
+}
+
+.kpi-value.up {
+  color: #20c997; /* Green for up */
+}
+
+.kpi-value.down {
+  color: #dc3545; /* Red for down */
+}
+
+/* Specific Grid Placements */
+.card-kpi-1 {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+.card-kpi-2 {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+.card-payment-pct {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.card-work-status {
+  grid-column: 4 / 5;
+  grid-row: 1 / 3; /* Spans two rows */
+}
+.card-expenditure-trend {
+  grid-column: 1 / 3;
+  grid-row: 2 / 3; /* Spans two columns */
+}
+.card-wage-split {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+.card-100-days-trend {
+  grid-column: 1 / 3;
+  grid-row: 3 / 4;
+}
+.card-demographics {
+  grid-column: 3 / 5;
+  grid-row: 3 / 4;
+}

@@ -1,15 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BACKEND_URL } from "../../Contant";
-import axios from "axios"
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { stateData } from "../data/state";
 
 function Home() {
+  const { location } = useSelector((state) => state.user);
   const [state, setState] = useState("");
   const [district, setDistrict] = useState("");
-  console.log("backend url ", BACKEND_URL)
+  const [districList, setDistrictList] = useState([]);
+
+  useEffect(() => {
+    const getCity = async () => {
+      const latitude = location?.latitude;
+      const longitude = location?.longitude;
+      console.log("location : ", location);
+
+      const result = await axios.get(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+      );
+
+      const data = result?.data;
+
+      const stateName = data?.principalSubdivision?.toUpperCase();
+
+      const adminArray = data?.localityInfo.administrative;
+
+      const districtObject = adminArray.find((item) => item.adminLevel === 5);
+
+      const districtName = districtObject ? districtObject.name : null;
+      const cleanedDistrictName = districtName
+        .replace(" district", "")
+        ?.toUpperCase();
+      setState(stateName);
+      setDistrict(cleanedDistrictName);
+      console.log("State:", state);
+      console.log("District:", district);
+    };
+    getCity();
+  }, [location]);
 
   const handleSearch = async () => {
     try {
-      console.log("state : ", state, " distric : ", district)
+      console.log("state : ", state, " distric : ", district);
       const response = await axios.get(
         `${BACKEND_URL}/api/user/${state}/${district}`
       );
@@ -18,9 +51,21 @@ function Home() {
       console.log("error while getting district detail ", error);
     }
   };
+
+  const handleGetDistrict = (e) => {
+    setState(e.target.value);
+    setDistrict("");
+    if (state == "") {
+      setDistrictList([]);
+      setDistrict("");
+    }
+    setDistrictList(stateData[e.target.value]);
+    console.log("district list : ", stateData[e.target.value]);
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 font-sans">
-      <div className="bg-white shadow-lg rounded-lg p-5">
+    <div className="flex items-center justify-center min-h-screen min-w-screen bg-gray-100 font-sans">
+      <div className="bg-white shadow-lg rounded-lg ">
         <div className="flex flex-col justify-center min-w-64">
           <h4 className="mb-4 font-bold text-xl text-center">
             Select Your Location
@@ -37,15 +82,16 @@ function Home() {
               <select
                 name="state"
                 id="state"
+                value={state}
                 className="p-2 w-full rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onChange={(e) => {
-                  setState(e.target.value);
-                }}
+                onChange={(e) => handleGetDistrict(e)}
               >
                 <option value="">-- Select a State --</option>
-                <option value="goa">Goa</option>
-                <option value="delhi">Delhi</option>
-                <option value="UTTAR PRADESH">UTTAR PRADESH</option>
+                {Object.keys(stateData).map((value, key) => (
+                  <option key={key} value={value}>
+                    {value}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -56,15 +102,19 @@ function Home() {
               <select
                 name="district"
                 id="district"
+                value={district}
                 className="p-2 w-full rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => {
                   setDistrict(e.target.value);
                 }}
+                disabled={!state}
               >
                 <option value="">-- Select a District --</option>
-                <option value="noida">Noida</option>
-                <option value="gurugram">Gurugram</option>
-                <option value="AMROHA">AMROHA</option>
+                {districList.map((value, index) => (
+                  <option key={index} value={value}>
+                    {value}
+                  </option>
+                ))}
               </select>
             </div>
           </form>

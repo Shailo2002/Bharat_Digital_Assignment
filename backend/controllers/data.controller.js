@@ -1,13 +1,12 @@
 import axios, { all } from "axios";
 import { Performance } from "../models/Performance.js";
+import { states } from "../data/state.js";
 
 export const getData = async (req, res) => {
   const API_KEY = process.env.DATA_GOV_API_KEY;
   const BASE_URL = process.env.BASE_URL;
   try {
     console.log("getData endpoint check");
-
-    const states = ["DN HAVELI AND DD", "LAKSHADWEEP"];
 
     let allData = [];
     for (const state of states) {
