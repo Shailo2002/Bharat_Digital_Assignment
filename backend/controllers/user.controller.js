@@ -1,15 +1,30 @@
+import { redisClient } from "../config/redisClient.js";
 import { Performance } from "../models/Performance.js";
 
 export const getDistricData = async (req, res) => {
   try {
-    console.log("get district endpoint check")
+    console.log("get district endpoint check");
     const { district, state } = req.params;
+    const cacheKey = `performance:${state}:${district}`;
+
+    const cachedData = await redisClient.get(cacheKey);
+
+    if (cachedData) {
+      console.log("♻️ Served from Redis cache");
+      return res.status(200).json({
+        success: true,
+        message: "data from cache",
+        data: JSON.parse(cachedData),
+      });
+    }
 
     const data = await Performance.find({
       district_name: district,
       state_name: state,
     });
-    console.log("data : ", data);
+
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(data));
+    console.log("🗄️ Cached data in Redis for 1 hour");
 
     return res.status(201).json({
       success: true,
