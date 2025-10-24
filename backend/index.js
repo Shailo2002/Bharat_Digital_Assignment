@@ -5,6 +5,7 @@ import dataRouter from "./routes/data.route.js";
 import connectDb from "./config/db.js";
 import testRedisRouter from "./routes/testRedis.js";
 import userRouter from "./routes/user.route.js";
+import "./cronJobs/dailySync.js";
 
 
 dotenv.config();

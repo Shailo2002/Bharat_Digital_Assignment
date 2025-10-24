@@ -7,44 +7,7 @@ export const getData = async (req, res) => {
   try {
     console.log("getData endpoint check");
 
-    // const states = [
-    //   "UTTAR PRADESH",
-    //   "MADHYA PRADESH",
-    //   "BIHAR",
-    //   "ASSAM",
-    //   "MAHARASHTRA",
-    //   "GUJARAT",
-    //   "RAJASTHAN",
-    //   "TAMIL NADU",
-    //   "CHHATTISGARH",
-    //   "KARNATAKA",
-    //   "TELANGANA",
-    //   "ODISHA",
-    //   "ANDHRA PRADESH",
-    //   "PUNJAB",
-    //   "JHARKHAND",
-    //   "HARYANA",
-    //   "ARUNACHAL PRADESH",
-    //   "JAMMU AND KASHMIR",
-    //   "MANIPUR",
-    //   "UTTARAKHAND",
-    //   "KERALA",
-    //   "HIMACHAL PRADESH",
-    //   "MEGHALAYA",
-    //   "WEST BENGAL",
-    //   "MIZORAM",
-    //   "NAGALAND",
-    //   "TRIPURA",
-    //   "SIKKIM",
-    //   "ANDAMAN AND NICOBAR",
-    //   "LADAKH",
-    //   "PUDUCHERRY",
-    //   "GOA",
-    //   "DN HAVELI AND DD",
-    //   "LAKSHADWEEP",
-    // ];
-
-    const states = ["UTTAR PRADESH", "DN HAVELI AND DD", "LAKSHADWEEP"];
+    const states = ["DN HAVELI AND DD", "LAKSHADWEEP"];
 
     let allData = [];
     for (const state of states) {
