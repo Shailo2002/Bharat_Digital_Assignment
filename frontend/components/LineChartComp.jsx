@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import { useSelector } from "react-redux";
 
-export default function LineChartComp({ line1_key, line2_key, title,bottom }) {
+export default function LineChartComp({ line1_key, line2_key, title, bottom }) {
   const { districtData } = useSelector((state) => state.user);
 
   return (
@@ -54,7 +54,7 @@ export default function LineChartComp({ line1_key, line2_key, title,bottom }) {
               verticalAlign="top"
               iconType="circle"
               iconSize={8}
-              wrapperStyle={{height:40}}
+              wrapperStyle={{ height: 40 }}
             />
           ) : (
             <Legend

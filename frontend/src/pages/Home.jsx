@@ -7,6 +7,7 @@ import LineChartComp from "../../components/LineChartComp";
 import StackedBarChart from "../../components/StackBarChart";
 import PieChartComp from "../../components/PieChartComp";
 import { setDistrictData } from "../redux/userSlice";
+import DashboardStatCards from "../../components/DashboardStatCards";
 
 function Home() {
   const { location } = useSelector((state) => state.user);
@@ -206,11 +207,19 @@ function Home() {
       </div>
 
       {loading ? (
-        <div className="bg-white p-4 rounded-xl shadow-sm flex justify-center items-center">
-          Data is Loading ...{" "}
+        <div className=" flex h-screen justify-center items-center pb-32 mx-4">
+          <div className="flex flex-col justify-center items-center bg-white p-4 rounded-xl shadow-sm w-96 h-72 text-center">
+            <h3 className="text-gray-700 font-medium text-lg">
+              No district selected
+            </h3>
+            <p className="text-gray-400 text-sm mt-1">
+              Please choose a state and district to view dashboard data.
+            </p>
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6">
+          <DashboardStatCards />
           <LineChartComp
             line1_key={"Total_Households_Worked"}
             line2_key={"Total_Individuals_Worked"}

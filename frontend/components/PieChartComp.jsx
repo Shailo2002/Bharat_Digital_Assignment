@@ -13,12 +13,10 @@ const COLORS = ["#6366f1", "#22c55e", "#facc15", "#ef4444", "#14b8a6"];
 export default function PieChartComp({ title, dataKeys = [] }) {
   const { districtData } = useSelector((state) => state.user);
 
-  // Use the last month’s aggregated data for pie
   const latest = districtData[districtData.length - 1];
 
-  // Prepare array from selected keys
   const pieData = dataKeys.map((key) => ({
-    name: key.replace(/_/g, " "), // cleaner label
+    name: key.replace(/_/g, " "),
     value: latest?.[key] || 0,
   }));
 
