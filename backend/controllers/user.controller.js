@@ -4,8 +4,9 @@ import { Performance } from "../models/Performance.js";
 export const getDistricData = async (req, res) => {
   try {
     console.log("get district endpoint check");
-    const { district, state } = req.params;
-    const cacheKey = `performance:${state}:${district}`;
+    const { district, state, year } = req.params;
+
+    const cacheKey = `performance:${state}:${district}:${year}`;
 
     const cachedData = await redisClient.get(cacheKey);
 
@@ -17,12 +18,17 @@ export const getDistricData = async (req, res) => {
         data: JSON.parse(cachedData),
       });
     }
+    const startYear = parseInt(year, 10);
+    const endYear = startYear + 1;
+    const finalyear = `${startYear}-${endYear}`;
 
     const data = await Performance.find({
       district_name: district,
       state_name: state,
+      fin_year: finalyear,
     });
 
+    console.log("data : ", data.length);
     await redisClient.setEx(cacheKey, 3600, JSON.stringify(data));
     console.log("🗄️ Cached data in Redis for 1 hour");
 

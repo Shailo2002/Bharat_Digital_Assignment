@@ -7,15 +7,21 @@ export const userSlice = createSlice({
       latitude: null,
       longitude: null,
     },
+    districtData: null,
+    loading:true
   },
   reducers: {
     setLocation: (state, action) => {
       const { lat, long } = action.payload;
       (state.location.latitude = lat), (state.location.longitude = long);
     },
+    setDistrictData: (state, action) => {
+      state.districtData = action.payload;
+      state.loading = false;
+    },
   },
 });
 
-export const {setLocation} = userSlice.actions;
+export const { setLocation, setDistrictData } = userSlice.actions;
 
 export default userSlice.reducer;

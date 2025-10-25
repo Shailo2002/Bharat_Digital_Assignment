@@ -1,6 +1,7 @@
 import axios, { all } from "axios";
 import { Performance } from "../models/Performance.js";
 import { states } from "../data/state.js";
+import { redisClient } from "../config/redisClient.js";
 
 export const getData = async (req, res) => {
   const API_KEY = process.env.DATA_GOV_API_KEY;
@@ -26,6 +27,8 @@ export const getData = async (req, res) => {
 
     await Performance.deleteMany({});
     await Performance.insertMany(allData);
+    await redisClient.flushAll();
+
 
     console.log(`🚀 Total stored records: ${allData.length}`);
     res.json({ message: "Data synced successfully", count: allData.length });

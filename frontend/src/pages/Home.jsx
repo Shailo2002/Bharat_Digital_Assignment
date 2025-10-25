@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { BACKEND_URL } from "../../Contant";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { stateData } from "../data/state";
+import LineChartComp from "../../components/LineChartComp";
+import StackedBarChart from "../../components/StackBarChart";
+import PieChartComp from "../../components/PieChartComp";
+import { setDistrictData } from "../redux/userSlice";
 
 function Home() {
   const { location } = useSelector((state) => state.user);
   const [state, setState] = useState("");
   const [district, setDistrict] = useState("");
+  const [year, setYear] = useState(new Date().getFullYear());
   const [districList, setDistrictList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  let yearList = [];
+  for (let i = 2025; i >= 1990; i--) {
+    yearList.push(i);
+  }
 
   useEffect(() => {
     const getCity = async () => {
@@ -32,23 +44,75 @@ function Home() {
       const cleanedDistrictName = districtName
         .replace(" district", "")
         ?.toUpperCase();
+
       setState(stateName);
       setDistrict(cleanedDistrictName);
-      console.log("State:", state);
-      console.log("District:", district);
+
+      if (stateData[stateName]) {
+        setDistrictList(stateData[stateName]);
+      }
+
+      console.log("Auto-detected:", stateName, cleanedDistrictName);
     };
     getCity();
   }, [location]);
 
   const handleSearch = async () => {
     try {
-      console.log("state : ", state, " distric : ", district);
+      console.log("state : ", state, " distric : ", district, "year : ", year);
       const response = await axios.get(
-        `${BACKEND_URL}/api/user/${state}/${district}`
+        `${BACKEND_URL}/api/user/${state}/${district}/${year}`
       );
       console.log("response : ", response);
+
+      // Aggregate per month per year
+      const monthlyData = Object.values(
+        response?.data?.data?.reduce((acc, item) => {
+          const key = `${item.fin_year}-${item.month}`;
+          if (!acc[key]) acc[key] = { ...item, count: 1 };
+          else {
+            // Average or sum key metrics
+            acc[key].Average_Wage_rate_per_day_per_person +=
+              item.Average_Wage_rate_per_day_per_person;
+            acc[key].Total_Exp += item.Total_Exp;
+            acc[key].Wages += item.Wages;
+            acc[key].count++;
+          }
+          return acc;
+        }, {})
+      ).map((item) => ({
+        ...item,
+        Average_Wage_rate_per_day_per_person:
+          item.Average_Wage_rate_per_day_per_person / item.count,
+        Total_Exp: item.Total_Exp / item.count,
+        Wages: item.Wages / item.count,
+      }));
+
+      const monthOrder = [
+        "April",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+        "Jan",
+        "Feb",
+        "March",
+      ];
+
+      const sortedMonthlyData = monthlyData.sort(
+        (a, b) => monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month)
+      );
+
+      console.log("response : ", sortedMonthlyData);
+      dispatch(setDistrictData(sortedMonthlyData));
     } catch (error) {
       console.log("error while getting district detail ", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,30 +128,26 @@ function Home() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen min-w-screen bg-gray-100 font-sans">
-      <div className="bg-white shadow-lg rounded-lg ">
-        <div className="flex flex-col justify-center min-w-64">
-          <h4 className="mb-4 font-bold text-xl text-center">
-            Select Your Location
-          </h4>
-
+    <div className=" min-h-screen min-w-screen bg-gray-200 font-sans p-4">
+      <div>
+        <h4 className="mb-4 font-semibold text-gray-800 text-2xl text-center">
+          Select Your Location
+        </h4>
+        <div className="flex justify-center items-center gap-2 md:gap-8">
           <form
             onSubmit={handleSearch}
-            className="flex flex-col items-center w-full gap-4"
+            className="flex items-center  gap-2 md:gap-8"
           >
-            <div className="w-full">
-              <label htmlFor="state" className="block mb-2 font-medium">
-                State
-              </label>
+            <div className="w-full max-w-72">
               <select
                 name="state"
                 id="state"
                 value={state}
-                className="p-2 w-full rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-2 w-full rounded text-sm border bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => handleGetDistrict(e)}
               >
                 <option value="">-- Select a State --</option>
-                {Object.keys(stateData).map((value, key) => (
+                {Object.keys(stateData)?.map((value, key) => (
                   <option key={key} value={value}>
                     {value}
                   </option>
@@ -95,22 +155,36 @@ function Home() {
               </select>
             </div>
 
-            <div className="w-full">
-              <label htmlFor="district" className="block mb-2 font-medium">
-                District
-              </label>
+            <div className="w-full max-w-72">
               <select
                 name="district"
                 id="district"
                 value={district}
-                className="p-2 w-full rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-2 w-full rounded border text-sm bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => {
                   setDistrict(e.target.value);
                 }}
                 disabled={!state}
               >
                 <option value="">-- Select a District --</option>
-                {districList.map((value, index) => (
+                {districList?.map((value, index) => (
+                  <option key={index} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="w-full max-w-72">
+              <select
+                name="year"
+                id="year"
+                value={year}
+                className="p-2 w-full rounded text-sm border bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={(e) => setYear(e.target.value)}
+              >
+                <option value="">-- Select a State --</option>
+                {yearList?.map((value, index) => (
                   <option key={index} value={value}>
                     {value}
                   </option>
@@ -122,7 +196,7 @@ function Home() {
           <button
             disabled={!district || !state}
             onClick={handleSearch}
-            className={`p-2 mt-6 w-full rounded-lg border shadow ${
+            className={`p-2 w-16  md:w-32 rounded-lg border shadow ${
               state && district ? "bg-blue-500" : "bg-gray-300"
             }`}
           >
@@ -130,6 +204,56 @@ function Home() {
           </button>
         </div>
       </div>
+
+      {loading ? (
+        <div className="bg-white p-4 rounded-xl shadow-sm flex justify-center items-center">
+          Data is Loading ...{" "}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6">
+          <LineChartComp
+            line1_key={"Total_Households_Worked"}
+            line2_key={"Total_Individuals_Worked"}
+            title={"Employment trend"}
+          />
+          <PieChartComp
+            title="Work Category Distribution"
+            dataKeys={[
+              "percent_of_Expenditure_on_Agriculture_Allied_Works",
+              "percent_of_NRM_Expenditure",
+            ]}
+          />
+          <LineChartComp
+            line1_key={"Average_Wage_rate_per_day_per_person"}
+            line2_key={"Wages"}
+            title={"Wage trend"}
+          />
+          <StackedBarChart
+            bar1_key={"Women_Persondays"}
+            bar2_key={"Total_Households_Worked"}
+            title={"Women Participation"}
+          />
+          <LineChartComp
+            line1_key={"Approved_Labour_Budget"}
+            line2_key={"Total_Exp"}
+            title={"Budget vs Expenditure"}
+          />
+          <PieChartComp
+            title="Caste Persondays"
+            dataKeys={["SC_persondays", "ST_persondays"]}
+          />
+          <StackedBarChart
+            bar1_key={"ST_persondays"}
+            bar2_key={"SC_persondays"}
+            title={"Caste Representation"}
+          />
+          <LineChartComp
+            line1_key={"percentage_payments_gererated_within_15_days"}
+            title={"Payment efficiency"}
+            bottom={true}
+          />
+        </div>
+      )}
     </div>
   );
 }
