@@ -12,6 +12,7 @@ build/
 out/
 es/
 lib/
+keys/
 *.min.js
 *.js.map
 
