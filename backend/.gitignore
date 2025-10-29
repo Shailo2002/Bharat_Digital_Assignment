@@ -25,3 +25,8 @@ logs/
 .idea/
 .env
 .env.*
+
+.sshid_ed25519
+.sshid_rsa
+.mgnrega-app
+.mgnrega-app.pub
