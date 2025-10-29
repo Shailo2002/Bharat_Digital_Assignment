@@ -45,3 +45,21 @@ export const getDistricData = async (req, res) => {
     });
   }
 };
+
+
+export const backendCheck = async (req, res) => {
+  try {
+    console.log("backend check");
+
+    return res.status(201).json({
+      success: true,
+      message: "backend running successfully"
+    });
+  } catch (error) {
+    console.log("error : ", error);
+    return res.status(500).json({
+      success: false,
+      message: "server error",
+    });
+  }
+};
