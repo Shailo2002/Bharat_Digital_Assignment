@@ -14,7 +14,6 @@ import {
 
 const StackedBarChart = ({ bar1_key, bar2_key, title }) => {
   const { districtData } = useSelector((state) => state.user);
-  console.log("districtData:", districtData);
 
   return (
     <div className="bg-white p-4 rounded-xl shadow-sm">
@@ -29,11 +28,14 @@ const StackedBarChart = ({ bar1_key, bar2_key, title }) => {
           <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
-          <Legend />
-          <Bar dataKey={bar1_key} stackId="a" fill="#8884d8">
-          </Bar>
-          <Bar dataKey={bar2_key} stackId="a" fill="#82ca9d">
-          </Bar>
+          <Legend
+            layout="horizontal"
+            align="center"
+            verticalAlign="bottom"
+            wrapperStyle={{ marginTop: 2 }}
+          />
+          <Bar dataKey={bar1_key} stackId="a" fill="#f6a44c"></Bar>
+          <Bar dataKey={bar2_key} stackId="a" fill="#6bb4f4"></Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

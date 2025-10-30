@@ -52,7 +52,7 @@ export default function DashboardStatCards() {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-2 gap-4 mt-4 w-full">
+    <div className="grid grid-cols-2 md:grid-cols-4  gap-4 mt-4 w-full  p-2 md:p-6">
       {cards.map((card, i) => (
         <div
           key={i}

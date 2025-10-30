@@ -10,7 +10,13 @@ import {
 } from "recharts";
 import { useSelector } from "react-redux";
 
-export default function LineChartComp({ line1_key, line2_key, title, bottom }) {
+export default function LineChartComp({
+  line1_key,
+  line2_key,
+  title,
+  legend1,
+  legend2,
+}) {
   const { districtData } = useSelector((state) => state.user);
 
   return (
@@ -47,28 +53,13 @@ export default function LineChartComp({ line1_key, line2_key, title, bottom }) {
             }}
           />
 
-          {bottom ? (
-            <Legend
-              layout="vertical"
-              align="center"
-              verticalAlign="top"
-              iconType="circle"
-              iconSize={8}
-              wrapperStyle={{ height: 40 }}
-            />
-          ) : (
-            <Legend
-              layout="vertical"
-              align="center"
-              verticalAlign="top"
-              iconType="circle"
-              iconSize={8}
-              wrapperStyle={{
-                right: 0,
-                top: -30,
-              }}
-            />
-          )}
+          <Legend
+            layout="vertical"
+            align="center"
+            verticalAlign="bottom"
+            iconType="circle"
+            iconSize={8}
+          />
 
           <Line
             type="monotone"
@@ -77,6 +68,7 @@ export default function LineChartComp({ line1_key, line2_key, title, bottom }) {
             strokeWidth={2}
             dot={{ r: 3 }}
             activeDot={{ r: 5, strokeWidth: 1, fill: "#6366f1" }}
+            name={legend1}
           />
           {line2_key && (
             <Line
@@ -86,6 +78,7 @@ export default function LineChartComp({ line1_key, line2_key, title, bottom }) {
               strokeWidth={2}
               dot={{ r: 3 }}
               activeDot={{ r: 5, strokeWidth: 1, fill: "#22c55e" }}
+              name={legend2}
             />
           )}
         </LineChart>

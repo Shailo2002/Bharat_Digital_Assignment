@@ -8,6 +8,7 @@ import StackedBarChart from "../../components/StackBarChart";
 import PieChartComp from "../../components/PieChartComp";
 import { setDistrictData } from "../redux/userSlice";
 import DashboardStatCards from "../../components/DashboardStatCards";
+import { IoMdSearch } from "react-icons/io";
 
 function Home() {
   const { location } = useSelector((state) => state.user);
@@ -27,7 +28,6 @@ function Home() {
     const getCity = async () => {
       const latitude = location?.latitude;
       const longitude = location?.longitude;
-      console.log("location : ", location);
 
       const result = await axios.get(
         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
@@ -53,18 +53,15 @@ function Home() {
         setDistrictList(stateData[stateName]);
       }
 
-      console.log("Auto-detected:", stateName, cleanedDistrictName);
     };
     getCity();
   }, [location]);
 
   const handleSearch = async () => {
     try {
-      console.log("state : ", state, " distric : ", district, "year : ", year);
       const response = await axios.get(
         `${BACKEND_URL}/api/user/${state}/${district}/${year}`
       );
-      console.log("response : ", response);
 
       // Aggregate per month per year
       const monthlyData = Object.values(
@@ -108,7 +105,6 @@ function Home() {
         (a, b) => monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month)
       );
 
-      console.log("response : ", sortedMonthlyData);
       dispatch(setDistrictData(sortedMonthlyData));
     } catch (error) {
       console.log("error while getting district detail ", error);
@@ -125,26 +121,25 @@ function Home() {
       setDistrict("");
     }
     setDistrictList(stateData[e.target.value]);
-    console.log("district list : ", stateData[e.target.value]);
   };
 
   return (
-    <div className=" min-h-screen min-w-screen bg-gray-200 font-sans p-4">
+    <div className=" bg-gray-200 font-sans p-4">
       <div>
         <h4 className="mb-4 font-semibold text-gray-800 text-2xl text-center">
           Select Your Location
         </h4>
-        <div className="flex justify-center items-center gap-2 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 ">
           <form
             onSubmit={handleSearch}
-            className="flex items-center  gap-2 md:gap-8"
+            className="grid grid-cols-1 md:col-span-3 md:grid-cols-3 gap-6 p-2 md:p-6 -space-y-2"
           >
-            <div className="w-full max-w-72">
+            <div className="w-full md:max-w-72">
               <select
                 name="state"
                 id="state"
                 value={state}
-                className="p-2 w-full rounded text-sm border bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-1.5 md:p-2  w-full text-sm border bg-white rounded-xl shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => handleGetDistrict(e)}
               >
                 <option value="">-- Select a State --</option>
@@ -156,12 +151,12 @@ function Home() {
               </select>
             </div>
 
-            <div className="w-full max-w-72">
+            <div className="w-full md:max-w-72">
               <select
                 name="district"
                 id="district"
                 value={district}
-                className="p-2 w-full rounded border text-sm bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-1.5 md:p-2  w-full text-sm border bg-white rounded-xl shadow-sme border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => {
                   setDistrict(e.target.value);
                 }}
@@ -176,15 +171,15 @@ function Home() {
               </select>
             </div>
 
-            <div className="w-full max-w-72">
+            <div className="w-full md:max-w-72">
               <select
                 name="year"
                 id="year"
                 value={year}
-                className="p-2 w-full rounded text-sm border bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-1.5 md:p-2 w-full text-sm border bg-white rounded-xl shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={(e) => setYear(e.target.value)}
               >
-                <option value="">-- Select a State --</option>
+                <option value="">-- Select a Year --</option>
                 {yearList?.map((value, index) => (
                   <option key={index} value={value}>
                     {value}
@@ -197,11 +192,16 @@ function Home() {
           <button
             disabled={!district || !state}
             onClick={handleSearch}
-            className={`p-2 w-16  md:w-32 rounded-lg border shadow ${
-              state && district ? "bg-blue-500" : "bg-gray-300"
+            className={`p-1.5 mt-2 w-full  rounded-lg border shadow md:col-span-1 md:max-w-72 md:p-2 md:my-6 ${
+              state && district && year
+                ? "bg-[#7474ec] text-white hover:bg-[#7474ece0] hover:shadow-xl cursor-pointer"
+                : "bg-gray-300 cursor-not-allowed"
             }`}
           >
-            Search
+            <span className="flex items-center justify-center gap-0.5">
+              <IoMdSearch size={24} className="pt-0.5" />
+              Search
+            </span>
           </button>
         </div>
       </div>
@@ -218,49 +218,50 @@ function Home() {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6">
+        <div>
           <DashboardStatCards />
-          <LineChartComp
-            line1_key={"Total_Households_Worked"}
-            line2_key={"Total_Individuals_Worked"}
-            title={"Employment trend"}
-          />
-          <PieChartComp
-            title="Work Category Distribution"
-            dataKeys={[
-              "percent_of_Expenditure_on_Agriculture_Allied_Works",
-              "percent_of_NRM_Expenditure",
-            ]}
-          />
-          <LineChartComp
-            line1_key={"Average_Wage_rate_per_day_per_person"}
-            line2_key={"Wages"}
-            title={"Wage trend"}
-          />
-          <StackedBarChart
-            bar1_key={"Women_Persondays"}
-            bar2_key={"Total_Households_Worked"}
-            title={"Women Participation"}
-          />
-          <LineChartComp
-            line1_key={"Approved_Labour_Budget"}
-            line2_key={"Total_Exp"}
-            title={"Budget vs Expenditure"}
-          />
-          <PieChartComp
-            title="Caste Persondays"
-            dataKeys={["SC_persondays", "ST_persondays"]}
-          />
-          <StackedBarChart
-            bar1_key={"ST_persondays"}
-            bar2_key={"SC_persondays"}
-            title={"Caste Representation"}
-          />
-          <LineChartComp
-            line1_key={"percentage_payments_gererated_within_15_days"}
-            title={"Payment efficiency"}
-            bottom={true}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-2 md:p-6">
+            <LineChartComp
+              line1_key={"Total_Households_Worked"}
+              line2_key={"Total_Individuals_Worked"}
+              title={"Employment trend"}
+            />
+            <PieChartComp
+              title="Work Category Distribution"
+              dataKeys={[
+                "percent_of_Expenditure_on_Agriculture_Allied_Works",
+                "percent_of_NRM_Expenditure",
+              ]}
+            />
+            <LineChartComp
+              line1_key={"Average_Wage_rate_per_day_per_person"}
+              line2_key={"Wages"}
+              title={"Wage trend"}
+            />
+            <StackedBarChart
+              bar1_key={"Women_Persondays"}
+              bar2_key={"Total_Households_Worked"}
+              title={"Women Participation"}
+            />
+            <LineChartComp
+              line1_key={"Approved_Labour_Budget"}
+              line2_key={"Total_Exp"}
+              title={"Budget vs Expenditure"}
+            />
+            <PieChartComp
+              title="Caste Persondays"
+              dataKeys={["SC_persondays", "ST_persondays"]}
+            />
+            <StackedBarChart
+              bar1_key={"ST_persondays"}
+              bar2_key={"SC_persondays"}
+              title={"Caste Representation"}
+            />
+            <LineChartComp
+              line1_key={"percentage_payments_gererated_within_15_days"}
+              title={"Payment efficiency"}
+            />
+          </div>
         </div>
       )}
     </div>

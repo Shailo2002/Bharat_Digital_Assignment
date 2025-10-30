@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const COLORS = ["#6366f1", "#22c55e", "#facc15", "#ef4444", "#14b8a6"];
+const COLORS = ["#7474ec", "#6cb5f4", "#facc15", "#ef4444", "#14b8a6"];
 
 export default function PieChartComp({ title, dataKeys = [] }) {
   const { districtData } = useSelector((state) => state.user);
@@ -44,9 +44,8 @@ export default function PieChartComp({ title, dataKeys = [] }) {
           <Tooltip />
           <Legend
             layout="vertical"
-            align="right"
-            verticalAlign="middle"
-            wrapperStyle={{maxWidth:200}}
+            align="center"
+            verticalAlign="bottom"
           />
         </PieChart>
       </ResponsiveContainer>
