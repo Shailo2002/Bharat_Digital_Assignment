@@ -42,6 +42,7 @@ export const getDistricData = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "server error",
+      error:  "Internal server error"
     });
   }
 };

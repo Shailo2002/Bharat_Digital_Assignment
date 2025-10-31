@@ -4,7 +4,6 @@ import { backendCheck } from "../controllers/user.controller.js";
 
 const dataRouter = express.Router();
 
-// dataRouter.get("/", getData)
 dataRouter.get("/check", backendCheck);
 
 export default dataRouter;

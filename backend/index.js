@@ -20,12 +20,6 @@ app.use(
 
 const port = process.env.PORT || 3000;
 
-app.get("/health", (req, res) => {
-  res.status(200).send("Healthy");
-});
-app.get("/", (req, res) => {
-  res.status(200).send("OK from root");
-});
 app.use("/api/data", dataRouter);
 app.use("/api/user", userRouter);
 app.use("/redis", testRedisRouter);

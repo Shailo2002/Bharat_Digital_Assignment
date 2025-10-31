@@ -9,6 +9,7 @@ import PieChartComp from "../../components/PieChartComp";
 import { setDistrictData } from "../redux/userSlice";
 import DashboardStatCards from "../../components/DashboardStatCards";
 import { IoMdSearch } from "react-icons/io";
+import toast from "react-hot-toast";
 
 function Home() {
   const { location } = useSelector((state) => state.user);
@@ -18,6 +19,7 @@ function Home() {
   const [districList, setDistrictList] = useState([]);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const [currentData, setCurrentData] = useState([]);
 
   let yearList = [];
   for (let i = 2025; i >= 1990; i--) {
@@ -52,18 +54,23 @@ function Home() {
       if (stateData[stateName]) {
         setDistrictList(stateData[stateName]);
       }
-
     };
     getCity();
   }, [location]);
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(
+      const promise = axios.get(
         `${BACKEND_URL}/api/user/${state}/${district}/${year}`
       );
+      toast.promise(promise, {
+        loading: "Loading",
+        success: "Got the data",
+        error: "Error when fetching",
+      });
+      const response = await promise;
 
-      // Aggregate per month per year
+      console.log("response : ", response?.data?.success)
       const monthlyData = Object.values(
         response?.data?.data?.reduce((acc, item) => {
           const key = `${item.fin_year}-${item.month}`;
@@ -105,6 +112,9 @@ function Home() {
         (a, b) => monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month)
       );
 
+      
+
+      setCurrentData(sortedMonthlyData);
       dispatch(setDistrictData(sortedMonthlyData));
     } catch (error) {
       console.log("error while getting district detail ", error);
@@ -206,15 +216,28 @@ function Home() {
         </div>
       </div>
 
-      {loading ? (
+      {loading || currentData.length <= 0 ? (
         <div className=" flex h-screen justify-center items-center pb-32 mx-4">
           <div className="flex flex-col justify-center items-center bg-white p-4 rounded-xl shadow-sm w-96 h-72 text-center">
-            <h3 className="text-gray-700 font-medium text-lg">
-              No district selected
-            </h3>
-            <p className="text-gray-400 text-sm mt-1">
-              Please choose a state and district to view dashboard data.
-            </p>
+            {currentData.length <= 0 && !loading ? (
+              <>
+                <h3 className="text-gray-700 font-medium text-lg">
+                  No Data Available
+                </h3>
+                <p className="text-gray-400 text-sm mt-1">
+                  Try selecting another year to view results.
+                </p>
+              </>
+            ) : (
+              <>
+                <h3 className="text-gray-700 font-medium text-lg">
+                  No district selected
+                </h3>
+                <p className="text-gray-400 text-sm mt-1">
+                  Please choose a state and district to view dashboard data.
+                </p>
+              </>
+            )}
           </div>
         </div>
       ) : (
