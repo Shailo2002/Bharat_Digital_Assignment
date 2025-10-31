@@ -20,12 +20,15 @@ app.use(
 
 const port = process.env.PORT || 3000;
 
-
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
 app.use("/api/data", dataRouter);
 app.use("/api/user", userRouter);
 app.use("/redis", testRedisRouter);
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   connectDb();
   console.log(`Server listening on port ${port}`);
 });
+
