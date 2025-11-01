@@ -38,7 +38,7 @@ export default function PieChartComp({ title, dataKeys = [] }) {
             label
           >
             {pieData.map((_, index) => (
-              <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              <Cell key={index}  fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
           <Tooltip />

@@ -9,6 +9,7 @@ export default function DashboardStatCards() {
   const latest = districtData[districtData.length - 1];
   const previous = districtData[districtData.length - 2] || latest;
 
+
   const calcChange = (curr, prev) => {
     if (!prev || prev === 0) return 0;
     return (((curr - prev) / prev) * 100).toFixed(1);

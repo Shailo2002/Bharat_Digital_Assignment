@@ -6,9 +6,10 @@ export const useGetUserLocation = () => {
   const dispatch = useDispatch();
   try {
     useEffect(() => {
+      if (!navigator.geolocation) return;
       navigator.geolocation.getCurrentPosition((position) => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
+        const latitude = position?.coords?.latitude;
+        const longitude = position?.coords?.longitude;
         dispatch(setLocation({ lat: latitude, long: longitude }));
       });
     }, []);

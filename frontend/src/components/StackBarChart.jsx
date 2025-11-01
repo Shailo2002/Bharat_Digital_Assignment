@@ -8,11 +8,9 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-
 } from "recharts";
 
-
-const StackedBarChart = ({ bar1_key, bar2_key, title }) => {
+const StackedBarChart = ({ bar1_key, bar2_key, title, legend1, legend2 }) => {
   const { districtData } = useSelector((state) => state.user);
 
   return (
@@ -32,10 +30,20 @@ const StackedBarChart = ({ bar1_key, bar2_key, title }) => {
             layout="horizontal"
             align="center"
             verticalAlign="bottom"
-            wrapperStyle={{ marginTop: 2 }}
+            wrapperStyle={{ marginTop: 8 }}
           />
-          <Bar dataKey={bar1_key} stackId="a" fill="#f6a44c"></Bar>
-          <Bar dataKey={bar2_key} stackId="a" fill="#6bb4f4"></Bar>
+          <Bar
+            dataKey={bar1_key}
+            name={legend1}
+            stackId="a"
+            fill="#f6a44c"
+          ></Bar>
+          <Bar
+            dataKey={bar2_key}
+            name={legend2}
+            stackId="a"
+            fill="#6bb4f4"
+          ></Bar>
         </BarChart>
       </ResponsiveContainer>
     </div>

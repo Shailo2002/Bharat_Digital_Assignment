@@ -3,13 +3,14 @@ import { BACKEND_URL } from "../../Contant";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { stateData } from "../data/state";
-import LineChartComp from "../../components/LineChartComp";
-import StackedBarChart from "../../components/StackBarChart";
-import PieChartComp from "../../components/PieChartComp";
 import { setDistrictData } from "../redux/userSlice";
-import DashboardStatCards from "../../components/DashboardStatCards";
+import DashboardStatCards from "../components/DashboardStatCards";
 import { IoMdSearch } from "react-icons/io";
 import toast from "react-hot-toast";
+import { debounce } from "lodash";
+import DashboardSection from "../components/DashboardSection";
+import SelectBox from "../components/ui/SelectBox";
+import EmptyState from "../components/EmptyState";
 
 function Home() {
   const { location } = useSelector((state) => state.user);
@@ -58,7 +59,7 @@ function Home() {
     getCity();
   }, [location]);
 
-  const handleSearch = async () => {
+  const handleSearch = debounce(async () => {
     try {
       const promise = axios.get(
         `${BACKEND_URL}/api/user/${state}/${district}/${year}`
@@ -70,7 +71,7 @@ function Home() {
       });
       const response = await promise;
 
-      console.log("response : ", response?.data?.success)
+      console.log("response : ", response?.data?.success);
       const monthlyData = Object.values(
         response?.data?.data?.reduce((acc, item) => {
           const key = `${item.fin_year}-${item.month}`;
@@ -112,8 +113,6 @@ function Home() {
         (a, b) => monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month)
       );
 
-      
-
       setCurrentData(sortedMonthlyData);
       dispatch(setDistrictData(sortedMonthlyData));
     } catch (error) {
@@ -121,7 +120,7 @@ function Home() {
     } finally {
       setLoading(false);
     }
-  };
+  }, 500);
 
   const handleGetDistrict = (e) => {
     setState(e.target.value);
@@ -144,59 +143,32 @@ function Home() {
             onSubmit={handleSearch}
             className="grid grid-cols-1 md:col-span-3 md:grid-cols-3 gap-6 p-2 md:p-6 -space-y-2"
           >
-            <div className="w-full md:max-w-72">
-              <select
-                name="state"
-                id="state"
-                value={state}
-                className="p-1.5 md:p-2  w-full text-sm border bg-white rounded-xl shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onChange={(e) => handleGetDistrict(e)}
-              >
-                <option value="">-- Select a State --</option>
-                {Object.keys(stateData)?.map((value, key) => (
-                  <option key={key} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <SelectBox
+              name={"state"}
+              value={state}
+              onChange={(e) => handleGetDistrict(e)}
+              options={Object.keys(stateData)}
+              placeholder={"-- Select a State --"}
+            />
 
-            <div className="w-full md:max-w-72">
-              <select
-                name="district"
-                id="district"
-                value={district}
-                className="p-1.5 md:p-2  w-full text-sm border bg-white rounded-xl shadow-sme border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onChange={(e) => {
-                  setDistrict(e.target.value);
-                }}
-                disabled={!state}
-              >
-                <option value="">-- Select a District --</option>
-                {districList?.map((value, index) => (
-                  <option key={index} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <SelectBox
+              name={"district"}
+              value={district}
+              onChange={(e) => {
+                setDistrict(e.target.value);
+              }}
+              disabled={!state}
+              options={districList}
+              placeholder={"-- Select a District --"}
+            />
 
-            <div className="w-full md:max-w-72">
-              <select
-                name="year"
-                id="year"
-                value={year}
-                className="p-1.5 md:p-2 w-full text-sm border bg-white rounded-xl shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onChange={(e) => setYear(e.target.value)}
-              >
-                <option value="">-- Select a Year --</option>
-                {yearList?.map((value, index) => (
-                  <option key={index} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <SelectBox
+              name={"distyearrict"}
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+              options={yearList}
+              placeholder={"-- Select a Year --"}
+            />
           </form>
 
           <button
@@ -217,74 +189,14 @@ function Home() {
       </div>
 
       {loading || currentData.length <= 0 ? (
-        <div className=" flex h-screen justify-center items-center pb-32 mx-4">
-          <div className="flex flex-col justify-center items-center bg-white p-4 rounded-xl shadow-sm w-96 h-72 text-center">
-            {currentData.length <= 0 && !loading ? (
-              <>
-                <h3 className="text-gray-700 font-medium text-lg">
-                  No Data Available
-                </h3>
-                <p className="text-gray-400 text-sm mt-1">
-                  Try selecting another year to view results.
-                </p>
-              </>
-            ) : (
-              <>
-                <h3 className="text-gray-700 font-medium text-lg">
-                  No district selected
-                </h3>
-                <p className="text-gray-400 text-sm mt-1">
-                  Please choose a state and district to view dashboard data.
-                </p>
-              </>
-            )}
-          </div>
-        </div>
+        <EmptyState
+          loading={loading}
+          hasData={currentData.length <= 0 ? false : true}
+        />
       ) : (
         <div>
           <DashboardStatCards />
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-2 md:p-6">
-            <LineChartComp
-              line1_key={"Total_Households_Worked"}
-              line2_key={"Total_Individuals_Worked"}
-              title={"Employment trend"}
-            />
-            <PieChartComp
-              title="Work Category Distribution"
-              dataKeys={[
-                "percent_of_Expenditure_on_Agriculture_Allied_Works",
-                "percent_of_NRM_Expenditure",
-              ]}
-            />
-            <LineChartComp
-              line1_key={"Average_Wage_rate_per_day_per_person"}
-              line2_key={"Wages"}
-              title={"Wage trend"}
-            />
-            <StackedBarChart
-              bar1_key={"Women_Persondays"}
-              bar2_key={"Total_Households_Worked"}
-              title={"Women Participation"}
-            />
-            <LineChartComp
-              line1_key={"Approved_Labour_Budget"}
-              line2_key={"Total_Exp"}
-              title={"Budget vs Expenditure"}
-            />
-            <PieChartComp
-              title="Caste Persondays"
-              dataKeys={["SC_persondays", "ST_persondays"]}
-            />
-            <StackedBarChart
-              bar1_key={"ST_persondays"}
-              bar2_key={"SC_persondays"}
-              title={"Caste Representation"}
-            />
-            <LineChartComp
-              line1_key={"percentage_payments_gererated_within_15_days"}
-              title={"Payment efficiency"}
-            />
-          </div>
+          <DashboardSection />
         </div>
       )}
     </div>
