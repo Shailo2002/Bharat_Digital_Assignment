@@ -191,7 +191,7 @@ function Home() {
       {loading || currentData.length <= 0 ? (
         <EmptyState
           loading={loading}
-          hasData={currentData.length <= 0 ? false : true}
+          hasData={currentData.length <= 0 ? true : false}
         />
       ) : (
         <div>
