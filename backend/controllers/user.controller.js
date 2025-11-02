@@ -11,7 +11,7 @@ export const getDistricData = async (req, res) => {
     const cachedData = await redisClient.get(cacheKey);
 
     if (cachedData) {
-      console.log("♻️ Served from Redis cache");
+      console.log("Served from Redis cache");
       return res.status(200).json({
         success: true,
         message: "data from cache",

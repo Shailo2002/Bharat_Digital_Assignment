@@ -16,7 +16,7 @@ export const getData = async (req, res) => {
           state
         )}`
       );
-      console.log(`✅ ${state}: ${data.records?.length || 0} records`);
+      console.log(`${state}: ${data.records?.length || 0} records`);
 
       if (data.records && data.records.length > 0) {
         allData.push(...data.records);
@@ -30,10 +30,10 @@ export const getData = async (req, res) => {
     await redisClient.flushAll();
 
 
-    console.log(`🚀 Total stored records: ${allData.length}`);
+    console.log(`Total stored records: ${allData.length}`);
     res.json({ message: "Data synced successfully", count: allData.length });
   } catch (error) {
-    console.error("❌ Error fetching data:", error.message);
+    console.error("Error fetching data:", error.message);
     res.status(500).json({ error: "Failed to sync data from MGNREGA API" });
   }
 };
