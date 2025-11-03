@@ -23,7 +23,7 @@ function Home() {
   const [currentData, setCurrentData] = useState([]);
 
   let yearList = [];
-  for (let i = 2025; i >= 1990; i--) {
+  for (let i = 2025; i >= 2018; i--) {
     yearList.push(i);
   }
 

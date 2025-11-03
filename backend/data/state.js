@@ -27,6 +27,7 @@ export const states = [
   "NAGALAND",
   "TRIPURA",
   "SIKKIM",
+  "DELHI",
   "ANDAMAN AND NICOBAR",
   "LADAKH",
   "PUDUCHERRY",

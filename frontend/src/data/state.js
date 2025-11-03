@@ -2,7 +2,7 @@ export const stateData = {
   "ANDAMAN AND NICOBAR ISLANDS": [
     "NICOBAR",
     "NORTH AND MIDDLE ANDAMAN",
-    "SOUTH ANDAMAN"
+    "SOUTH ANDAMAN",
   ],
   "ANDHRA PRADESH": [
     "ALLURI SITHARAMA RAJU",
@@ -30,7 +30,7 @@ export const stateData = {
     "VISAKHAPATNAM",
     "VIZIANAGARAM",
     "WEST GODAVARI",
-    "YSR"
+    "YSR",
   ],
   "ARUNACHAL PRADESH": [
     "ANJAW",
@@ -57,9 +57,9 @@ export const stateData = {
     "UPPER SIANG",
     "UPPER SUBANSIRI",
     "WEST KAMENG",
-    "WEST SIANG"
+    "WEST SIANG",
   ],
-  "ASSAM": [
+  ASSAM: [
     "BAJALI",
     "BAKSA",
     "BARPETA",
@@ -94,9 +94,9 @@ export const stateData = {
     "TAMULPUR",
     "TINSUKIA",
     "UDALGURI",
-    "WEST KARBI ANGLONG"
+    "WEST KARBI ANGLONG",
   ],
-  "BIHAR": [
+  BIHAR: [
     "ARARIA",
     "ARWAL",
     "AURANGABAD",
@@ -134,12 +134,10 @@ export const stateData = {
     "SIWAN",
     "SUPAUL",
     "VAISHALI",
-    "WEST CHAMPARAN"
+    "WEST CHAMPARAN",
   ],
-  "CHANDIGARH": [
-    "CHANDIGARH"
-  ],
-  "CHHATTISGARH": [
+  CHANDIGARH: ["CHANDIGARH"],
+  CHHATTISGARH: [
     "BALOD",
     "BALODA BAZAR",
     "BALRAMPUR",
@@ -172,14 +170,14 @@ export const stateData = {
     "SARANGARH-BILAIGARH",
     "SUKMA",
     "SURAJPUR",
-    "SURGUJA"
+    "SURGUJA",
   ],
   "DADRA AND NAGAR HAVELI AND DAMAN AND DIU": [
     "DAMAN",
     "DIU",
-    "DADRA AND NAGAR HAVELI"
+    "DADRA AND NAGAR HAVELI",
   ],
-  "DELHI": [
+  DELHI: [
     "CENTRAL DELHI",
     "EAST DELHI",
     "NEW DELHI",
@@ -190,13 +188,10 @@ export const stateData = {
     "SOUTH DELHI",
     "SOUTH EAST DELHI",
     "SOUTH WEST DELHI",
-    "WEST DELHI"
+    "WEST DELHI",
   ],
-  "GOA": [
-    "NORTH GOA",
-    "SOUTH GOA"
-  ],
-  "GUJARAT": [
+  GOA: ["NORTH GOA", "SOUTH GOA"],
+  GUJARAT: [
     "AHMEDABAD",
     "AMRELI",
     "ANAND",
@@ -229,9 +224,9 @@ export const stateData = {
     "SURENDRANAGAR",
     "TAPI",
     "VADODARA",
-    "VALSAD"
+    "VALSAD",
   ],
-  "HARYANA": [
+  HARYANA: [
     "AMBALA",
     "BHIWANI",
     "CHARKHI DADRI",
@@ -253,7 +248,7 @@ export const stateData = {
     "ROHTAK",
     "SIRSA",
     "SONIPAT",
-    "YAMUNANAGAR"
+    "YAMUNANAGAR",
   ],
   "HIMACHAL PRADESH": [
     "BILASPUR",
@@ -267,7 +262,7 @@ export const stateData = {
     "SHIMLA",
     "SIRMAUR",
     "SOLAN",
-    "UNA"
+    "UNA",
   ],
   "JAMMU AND KASHMIR": [
     "ANANTNAG",
@@ -289,9 +284,9 @@ export const stateData = {
     "SAMBA",
     "SHOPIAN",
     "SRINAGAR",
-    "UDHAMPUR"
+    "UDHAMPUR",
   ],
-  "JHARKHAND": [
+  JHARKHAND: [
     "BOKARO",
     "CHATRA",
     "DEOGHAR",
@@ -315,9 +310,9 @@ export const stateData = {
     "SAHEBGANJ",
     "SERAIKELA KHARSAWAN",
     "SIMDEGA",
-    "WEST SINGHBHUM"
+    "WEST SINGHBHUM",
   ],
-  "KARNATAKA": [
+  KARNATAKA: [
     "BAGALKOT",
     "BALLARI",
     "BELAGAVI",
@@ -348,9 +343,9 @@ export const stateData = {
     "UTTARA KANNADA",
     "VIJAYANAGARA",
     "VIJAYAPURA",
-    "YADGIR"
+    "YADGIR",
   ],
-  "KERALA": [
+  KERALA: [
     "ALAPPUZHA",
     "ERNAKULAM",
     "IDUKKI",
@@ -364,15 +359,10 @@ export const stateData = {
     "PATHANAMTHITTA",
     "THIRUVANANTHAPURAM",
     "THRISSUR",
-    "WAYANAD"
+    "WAYANAD",
   ],
-  "LADAKH": [
-    "KARGIL",
-    "LEH"
-  ],
-  "LAKSHADWEEP": [
-    "LAKSHADWEEP"
-  ],
+  LADAKH: ["KARGIL", "LEH"],
+  LAKSHADWEEP: ["LAKSHADWEEP"],
   "MADHYA PRADESH": [
     "AGAR MALWA",
     "ALIRAJPUR",
@@ -427,9 +417,9 @@ export const stateData = {
     "TIKAMGARH",
     "UJJAIN",
     "UMARIA",
-    "VIDISHA"
+    "VIDISHA",
   ],
-  "MAHARASHTRA": [
+  MAHARASHTRA: [
     "AHMEDNAGAR",
     "AKOLA",
     "AMRAVATI",
@@ -465,9 +455,9 @@ export const stateData = {
     "THANE",
     "WARDHA",
     "WASHIM",
-    "YAVATMAL"
+    "YAVATMAL",
   ],
-  "MANIPUR": [
+  MANIPUR: [
     "BISHNUPUR",
     "CHANDEL",
     "CHURACHANDPUR",
@@ -483,9 +473,9 @@ export const stateData = {
     "TAMENGLONG",
     "TENGNOUPAL",
     "THOUBAL",
-    "UKHRUL"
+    "UKHRUL",
   ],
-  "MEGHALAYA": [
+  MEGHALAYA: [
     "EAST GARO HILLS",
     "EAST JAINTIA HILLS",
     "EAST KHASI HILLS",
@@ -497,9 +487,9 @@ export const stateData = {
     "SOUTH WEST KHASI HILLS",
     "WEST GARO HILLS",
     "WEST JAINTIA HILLS",
-    "WEST KHASI HILLS"
+    "WEST KHASI HILLS",
   ],
-  "MIZORAM": [
+  MIZORAM: [
     "AIZAWL",
     "CHAMPHAI",
     "HNAHTHIAL",
@@ -511,9 +501,9 @@ export const stateData = {
     "MAMIT",
     "SAIHA",
     "SAITUAL",
-    "SERCHHIP"
+    "SERCHHIP",
   ],
-  "NAGALAND": [
+  NAGALAND: [
     "CHUMOUKEDIMA",
     "DIMAPUR",
     "KIPHIRE",
@@ -529,8 +519,186 @@ export const stateData = {
     "TSEMINYU",
     "TUENSANG",
     "WOKHA",
-    "ZUNHEBOTO"
+    "ZUNHEBOTO",
   ],
+  ODISHA: [
+    "ANGUL",
+    "BALANGIR",
+    "BALESHWAR",
+    "BARGARH",
+    "BHADRAK",
+    "BOUDH",
+    "CUTTACK",
+    "DEOGARH",
+    "DHENKANAL",
+    "GAJAPATI",
+    "GANJAM",
+    "JAGATSINGHPUR",
+    "JAJPUR",
+    "JHARSUGUDA",
+    "KALAHANDI",
+    "KANDHAMAL",
+    "KENDRAPARA",
+    "KEONJHAR",
+    "KHORDHA",
+    "KORAPUT",
+    "MALKANGIRI",
+    "MAYURBHANJ",
+    "NABARANGPUR",
+    "NAYAGARH",
+    "NUAPADA",
+    "PURI",
+    "RAYAGADA",
+    "SAMBALPUR",
+    "SONEPUR",
+    "SUNDARGARH",
+  ],
+  PUDUCHERRY: ["KARAIKAL", "MAHE", "PUDUCHERRY", "YANAM"],
+  PUNJAB: [
+    "AMRITSAR",
+    "BARNALA",
+    "BATHINDA",
+    "FARIDKOT",
+    "FATEHGARH SAHIB",
+    "FAZILKA",
+    "FEROZEPUR",
+    "GURDASPUR",
+    "HOSHIARPUR",
+    "JALANDHAR",
+    "KAPURTHALA",
+    "LUDHIANA",
+    "MANSA",
+    "MOGA",
+    "MUKTSAR",
+    "PATHANKOT",
+    "PATIALA",
+    "RUPNAGAR",
+    "SANGRUR",
+    "SAS NAGAR",
+    "SHAHEED BHAGAT SINGH NAGAR",
+    "SRI MUKTSAR SAHIB",
+    "TARN TARAN",
+  ],
+  RAJASTHAN: [
+    "AJMER",
+    "ALWAR",
+    "BANSWARA",
+    "BARAN",
+    "BARMER",
+    "BHARATPUR",
+    "BHILWARA",
+    "BIKANER",
+    "BUNDI",
+    "CHITTORGARH",
+    "CHURU",
+    "DAUSA",
+    "DHOLPUR",
+    "DUNGARPUR",
+    "GANGANAGAR",
+    "HANUMANGARH",
+    "JAIPUR",
+    "JAISALMER",
+    "JALORE",
+    "JHALAWAR",
+    "JHUNJHUNU",
+    "JODHPUR",
+    "KARAULI",
+    "KOTA",
+    "NAGAUR",
+    "PALI",
+    "PRATAPGARH",
+    "RAJSAMAND",
+    "SAWAI MADHOPUR",
+    "SIKAR",
+    "SIROHI",
+    "TONK",
+    "UDAIPUR",
+  ],
+  SIKKIM: ["EAST SIKKIM", "NORTH SIKKIM", "SOUTH SIKKIM", "WEST SIKKIM"],
+  "TAMIL NADU": [
+    "ARIYALUR",
+    "CHENGALPATTU",
+    "CHENNAI",
+    "COIMBATORE",
+    "CUDDALORE",
+    "DHARMAPURI",
+    "DINDIGUL",
+    "ERODE",
+    "KALLAKURICHI",
+    "KANCHIPURAM",
+    "KANNIYAKUMARI",
+    "KARUR",
+    "KRISHNAGIRI",
+    "MADURAI",
+    "MAYILADUTHURAI",
+    "NAGAPATTINAM",
+    "NAMAKKAL",
+    "PERAMBALUR",
+    "PUDUKKOTTAI",
+    "RAMANATHAPURAM",
+    "RANIPET",
+    "SALEM",
+    "SIVAGANGA",
+    "TENKASI",
+    "THANJAVUR",
+    "THENI",
+    "THIRUVALLUR",
+    "THIRUVARUR",
+    "THOOTHUKUDI",
+    "TIRUCHIRAPPALLI",
+    "TIRUNELVELI",
+    "TIRUPATHUR",
+    "TIRUPPUR",
+    "TIRUVANNAMALAI",
+    "VELLORE",
+    "VILUPPURAM",
+    "VIRUDHUNAGAR",
+  ],
+  TELANGANA: [
+    "ADILABAD",
+    "BHADRADRI KOTHAGUDEM",
+    "HANUMAKONDA",
+    "HYDERABAD",
+    "JAGTIAL",
+    "JANGOAN",
+    "JAYASHANKAR BHOOPALPALLY",
+    "JOGULAMBA GADWAL",
+    "KAMAREDDY",
+    "KARIMNAGAR",
+    "KHAMMAM",
+    "KOMARAM BHEEM ASIFABAD",
+    "MAHABUBABAD",
+    "MAHABUBNAGAR",
+    "MANCHERIAL",
+    "MEDAK",
+    "MEDCHAL–MALKAJGIRI",
+    "MULUGU",
+    "NAGARKURNOOL",
+    "NALGONDA",
+    "NARAYANPET",
+    "NIRMAL",
+    "NIZAMABAD",
+    "PEDDAPALLI",
+    "RAJANNA SIRCILLA",
+    "RANGAREDDY",
+    "SANGAREDDY",
+    "SIDDIPET",
+    "SURYAPET",
+    "VIKARABAD",
+    "WANAPARTHY",
+    "WARANGAL",
+    "YADADRI BHUVANAGIRI",
+  ],
+  "TRIPURA": [
+  "DHALAI",
+  "GOMATI",
+  "KHOWAI",
+  "NORTH TRIPURA",
+  "SEPAHIJALA",
+  "SOUTH TRIPURA",
+  "UNAKOTI",
+  "WEST TRIPURA"
+],
   "UTTAR PRADESH": [
     "AGRA",
     "ALIGARH",
@@ -606,9 +774,9 @@ export const stateData = {
     "SONBHADRA",
     "SULTANPUR",
     "UNNAO",
-    "VARANASI"
+    "VARANASI",
   ],
-  "UTTARAKHAND": [
+  UTTARAKHAND: [
     "ALMORA",
     "BAGESHWAR",
     "CHAMOLI",
@@ -621,7 +789,7 @@ export const stateData = {
     "RUDRAPRAYAG",
     "TEHRI GARHWAL",
     "UDHAM SINGH NAGAR",
-    "UTTARKASHI"
+    "UTTARKASHI",
   ],
   "WEST BENGAL": [
     "ALIPURDUAR",
@@ -646,6 +814,6 @@ export const stateData = {
     "PURBA MEDINIPUR",
     "PURULIA",
     "SOUTH 24 PARGANAS",
-    "UTTAR DINAJPUR"
-  ]
-}
+    "UTTAR DINAJPUR",
+  ],
+};

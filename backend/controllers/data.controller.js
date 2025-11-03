@@ -12,7 +12,7 @@ export const getData = async (req, res) => {
     let allData = [];
     for (const state of states) {
       const { data } = await axios.get(
-        `${BASE_URL}?api-key=${API_KEY}&format=json&limit=10000&filters[state_name]=${encodeURIComponent(
+        `${BASE_URL}?api-key=${API_KEY}&format=json&limit=20000&filters[state_name]=${encodeURIComponent(
           state
         )}`
       );

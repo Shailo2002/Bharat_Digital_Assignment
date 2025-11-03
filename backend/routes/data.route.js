@@ -6,4 +6,5 @@ const dataRouter = express.Router();
 
 dataRouter.get("/check", backendCheck);
 
+
 export default dataRouter;
