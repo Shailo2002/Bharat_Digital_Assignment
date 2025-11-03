@@ -32,7 +32,7 @@ A short Loom video (under 2 minutes) demonstrates:
 - The API integration and caching logic
 - The frontend interface and accessibility decisions
 
-*[(Add your Loom video link here once available)](https://www.loom.com/share/1598a28e23684444bea6837bd0346a22)*
+*[(Project Walkthrough video)](https://www.loom.com/share/1598a28e23684444bea6837bd0346a22)*
 
 ---
 
@@ -226,13 +226,6 @@ Visit: `http://localhost:5173`
 
 - **Shailesh** – Full-stack Developer  
   GitHub: [@Shailo2002](https://github.com/Shailo2002)
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License**.  
-You are free to use, modify, and distribute it with attribution.
 
 ---
 
