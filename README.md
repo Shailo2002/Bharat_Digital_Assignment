@@ -32,7 +32,7 @@ A short Loom video (under 2 minutes) demonstrates:
 - The API integration and caching logic
 - The frontend interface and accessibility decisions
 
-*[(Project Walkthrough video)](https://www.loom.com/share/1598a28e23684444bea6837bd0346a22)*
+*[Project Walkthrough video](https://www.loom.com/share/1598a28e23684444bea6837bd0346a22)*
 
 ---
 
